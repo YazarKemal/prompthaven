@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PromptHaven - AI Prompt Kütüphanesi</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="PromptHaven Logo" class="logo">
+            <h1>PromptHaven</h1>
+        </div>
+        <p class="subtitle">Topluluğun en iyi AI üretimlerini keşfet ve kopyala.</p>
+
+        <div class="search-container">
+            <i class="fa-solid fa-search search-icon"></i>
+            <input type="text" id="search-input" placeholder="Prompt ara... (örn: cat, neon, warrior)">
+        </div>
+
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">Tümü</button>
+            <button class="filter-btn" data-filter="portre">Portre</button>
+            <button class="filter-btn" data-filter="manzara">Manzara</button>
+            <button class="filter-btn" data-filter="3d">3D Sanat</button>
+            <button class="filter-btn" data-filter="cyberpunk">Cyberpunk</button>
+        </div>
+    </header>
+
+    <div class="gallery-container" id="gallery">
+        </div>
+    <div id="toast" class="toast hidden">Kopyalandı! ✅</div>
+
+    <div id="ad-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fa-solid fa-crown" style="color: #ffd700;"></i> Premium Prompt</h3>
+                <span class="close-image-btn" id="close-modal" style="position: static; font-size: 30px; line-height: 1;">&times;</span>
+            </div>
+            <p>Bu özel promptu kopyalamak için kısa bir reklam izleyerek bize destek olmalısınız.</p>
+            <button id="watch-ad-btn" class="watch-btn"><i class="fa-solid fa-play"></i> Reklamı İzle (Demo)</button>
+        </div>
+    </div>
+
+    <div id="image-modal" class="modal hidden" onclick="closeLightbox(event)">
+        <span class="close-image-btn" onclick="closeLightbox(event)">&times;</span>
+        <img class="modal-image-content" id="lightbox-img">
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 PromptHaven. Tüm hakları saklıdır.</p>
+            <div class="footer-links">
+                <a href="#">Gizlilik Politikası</a>
+                <span class="separator">•</span>
+                <a href="#">Kullanım Şartları</a>
+                <span class="separator">•</span>
+                <a href="mailto:iletisim@prompthaven.com">İletişim</a>
+            </div>
+            <p class="disclaimer">Bu site sadece eğitim ve demonstrasyon amaçlıdır. Görseller AI ile üretilmiştir.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
