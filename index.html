@@ -3,29 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PromptHaven - Gerçekçi AI Modelleri</title>
+    
+    <title>PromptHaven | Gerçekçi AI Modelleri ve Prompt Kütüphanesi</title>
+    <meta name="description" content="Yapay zeka ile üretilmiş ultra gerçekçi modeller, moda çekimleri ve sinematik portreler için en iyi Midjourney ve Stable Diffusion promptları.">
+    <meta name="keywords" content="ai prompt, midjourney promptları, stable diffusion, gerçekçi ai portre, yapay zeka fotoğrafçılık">
+    <meta name="author" content="PromptHaven">
+
+    <meta property="og:title" content="PromptHaven - Gerçekçi AI Modelleri">
+    <meta property="og:description" content="En iyi AI fotoğrafçılık promptlarını keşfet ve kopyala.">
+    <meta property="og:image" content="logo.png"> <meta property="og:url" content="https://prompthaven.com">
+
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <div class="logo-container">
-            <img src="logo.png" alt="PromptHaven Logo" class="logo">
-            <h1>PromptHaven</h1>
-        </div>
-        <p class="subtitle">En gerçekçi AI fotoğrafçılık promptları ve modelleri.</p>
+        <div class="hero-glow glow-1"></div>
+        <div class="hero-glow glow-2"></div>
 
-        <div class="search-container">
-            <i class="fa-solid fa-search search-icon"></i>
-            <input type="text" id="search-input" placeholder="Model ara... (örn: suit, winter, portrait)">
-        </div>
-
-        <div class="filter-container">
-            <button class="filter-btn active" data-filter="all">Tümü</button>
-            <button class="filter-btn" data-filter="portre">Portre (Yüz)</button>
-            <button class="filter-btn" data-filter="boydan">Boydan (Moda)</button>
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="logo.png" alt="PromptHaven Logo" class="logo">
+                <h1>PromptHaven</h1>
             </div>
+            
+            <p class="subtitle typing-effect">Yapay zeka fotoğrafçılığının en gerçekçi halini keşfet.</p>
+
+            <div class="search-container">
+                <i class="fa-solid fa-search search-icon"></i>
+                <input type="text" id="search-input" placeholder="Ne arıyorsun? (örn: iş adamı, kış modası, sinematik...)">
+            </div>
+
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">Tümü</button>
+                <button class="filter-btn" data-filter="portre">Portre</button>
+                <button class="filter-btn" data-filter="boydan">Moda & Boydan</button>
+            </div>
+        </div>
     </header>
 
     <div class="gallery-container" id="gallery">
@@ -34,11 +55,11 @@
     <div id="ad-modal" class="modal hidden">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title"><i class="fa-solid fa-crown" style="color: #ffd700;"></i> Premium Prompt</h3>
-                <span class="close-image-btn" id="close-modal" style="position: static; font-size: 30px; line-height: 1; color:#fff;">&times;</span>
+                <h3 class="modal-title"><i class="fa-solid fa-crown" style="color: #ffd700;"></i> Premium İçerik</h3>
+                <span class="close-image-btn" id="close-modal" style="position: static; font-size: 24px; color:#fff;">&times;</span>
             </div>
-            <p>Bu özel promptu kopyalamak için kısa bir bekleme süresi (reklam) gereklidir.</p>
-            <button id="watch-ad-btn" class="watch-btn"><i class="fa-solid fa-play"></i> Reklamı İzle (Demo)</button>
+            <p style="color:#ccc; font-size: 0.95rem; margin-top:10px;">Bu yüksek kaliteli promptu kopyalamak için 3 saniyelik bir bekleme süresi gereklidir.</p>
+            <button id="watch-ad-btn" class="watch-btn"><i class="fa-solid fa-play"></i> Kilidi Aç (Demo)</button>
         </div>
     </div>
 
@@ -51,18 +72,17 @@
         <div class="footer-content">
             <p>&copy; 2025 PromptHaven. Tüm hakları saklıdır.</p>
             <div class="footer-links">
-                <a href="#">Gizlilik Politikası</a>
+                <a href="privacy.html">Gizlilik Politikası</a>
                 <span class="separator">•</span>
-                <a href="#">Kullanım Şartları</a>
+                <a href="terms.html">Kullanım Şartları</a>
                 <span class="separator">•</span>
-                <a href="mailto:iletisim@prompthaven.com">İletişim</a>
+               <a href="contact.html">İletişim</a>
             </div>
-            <p class="disclaimer">Görseller yapay zeka ile üretilmiştir.</p>
+            <p class="disclaimer">Sitedeki görseller yapay zeka ile üretilmiştir.</p>
         </div>
     </footer>
 
     <div id="toast" class="toast">Kopyalandı! ✅</div>
-
     <script src="script.js"></script>
 </body>
 </html>

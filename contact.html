@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim - PromptHaven</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .contact-container { 
+            max-width: 600px; 
+            margin: 40px auto; 
+            padding: 40px; 
+            background: #111827; 
+            border-radius: 24px; 
+            border: 1px solid #1f2937; 
+            text-align: center;
+        }
+        h1 { color: #ffd700; margin-bottom: 20px; font-size: 2rem; }
+        p { color: #9ca3af; margin-bottom: 40px; }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            background: #1f2937;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #fff;
+            border: 1px solid transparent;
+        }
+        .contact-item:hover {
+            border-color: #ffd700;
+            transform: translateY(-5px);
+            background: #374151;
+        }
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #ffd700;
+            margin-right: 20px;
+        }
+        .info h3 { margin: 0; font-size: 1.1rem; }
+        .info span { color: #9ca3af; font-size: 0.9rem; }
+        
+        .back-btn { display: inline-block; margin-bottom: 20px; color: #6b7280; text-decoration: none; }
+        .back-btn:hover { color: #fff; }
+    </style>
+</head>
+<body>
+
+    <header style="padding: 20px; border:none; background:transparent;">
+        <div class="logo-container">
+            <h1>PromptHaven</h1>
+        </div>
+    </header>
+
+    <div class="contact-container">
+        <a href="index.html" class="back-btn">← Ana Sayfaya Dön</a>
+        
+        <h1>Bize Ulaşın</h1>
+        <p>Önerileriniz, telif hakkı bildirimleri veya iş birliği için aşağıdaki kanallardan bize ulaşabilirsiniz.</p>
+
+        <a href="mailto:iletisim@prompthaven.com" class="contact-item">
+            <div class="icon-box"><i class="fa-solid fa-envelope"></i></div>
+            <div class="info">
+                <h3>E-Posta Gönder</h3>
+                <span>iletisim@prompthaven.com</span>
+            </div>
+        </a>
+
+        <a href="#" class="contact-item">
+            <div class="icon-box"><i class="fa-brands fa-instagram"></i></div>
+            <div class="info">
+                <h3>Instagram</h3>
+                <span>@prompthaven</span>
+            </div>
+        </a>
+        
+        <a href="#" class="contact-item">
+            <div class="icon-box"><i class="fa-brands fa-discord"></i></div>
+            <div class="info">
+                <h3>Discord Topluluğu</h3>
+                <span>Yakında...</span>
+            </div>
+        </a>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2025 PromptHaven. Tüm hakları saklıdır.</p>
+    </footer>
+
+</body>
+</html>

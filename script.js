@@ -55,6 +55,9 @@ let currentPremiumPrompt = "";
 /* =========================================
    3. GALERİYİ ÇİZME (RENDER)
    ========================================= */
+/* =========================================
+   3. GALERİYİ ÇİZME (ANIMASYONLU)
+   ========================================= */
 function renderGallery(dataList) {
     gallery.innerHTML = ""; 
 
@@ -63,13 +66,18 @@ function renderGallery(dataList) {
         return;
     }
     
-    dataList.forEach(item => {
+    // index parametresini ekledik (sırayı bilmek için)
+    dataList.forEach((item, index) => {
         const badgeHTML = item.isPremium ? `<div class="premium-badge"><i class="fa-solid fa-crown"></i> PREMIUM</div>` : '';
         const btnIcon = item.isPremium ? '<i class="fa-solid fa-lock"></i> Kilidi Aç' : '<i class="fa-regular fa-copy"></i> Kopyala';
         const safeText = item.text.replace(/'/g, "\\'");
 
+        // ANİMASYON GECİKMESİ HESAPLAMA
+        // Her kart bir öncekinden 0.1 saniye sonra gelecek.
+        // style="animation-delay: ${index * 0.1}s"
+        
         const cardHTML = `
-            <div class="card">
+            <div class="card" style="animation-delay: ${index * 0.1}s">
                 <img src="${item.image}" alt="AI Art" class="card-img" loading="lazy" onclick="openLightbox('${item.image}')">
                 ${badgeHTML}
                 <div class="card-overlay">
