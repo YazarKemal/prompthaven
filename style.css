@@ -1,8 +1,8 @@
 /* =========================================
-   1. GENEL AYARLAR (RESET)
+   GENEL AYARLAR
    ========================================= */
 body {
-    background-color: #0f1115; /* Koyu antrasit arka plan */
+    background-color: #0f1115;
     color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
@@ -11,27 +11,26 @@ body {
 }
 
 /* =========================================
-   2. HEADER (ÜST KISIM VE LOGO)
+   HEADER (ÜST KISIM)
    ========================================= */
 header {
     text-align: center;
     padding: 40px 20px;
-    background: linear-gradient(to bottom, #161920, #0f1115); /* Hafif geçişli zemin */
+    background: linear-gradient(to bottom, #161920, #0f1115);
     border-bottom: 1px solid #222;
     margin-bottom: 40px;
 }
 
-/* Logo ve Başlık Alanı */
 .logo-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px; /* Logo ile yazı arası boşluk */
+    gap: 15px;
     margin-bottom: 10px;
 }
 
 .logo {
-    width: 60px; /* Logo boyutu */
+    width: 60px;
     height: auto;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
@@ -40,7 +39,6 @@ header {
 header h1 {
     margin: 0;
     font-size: 2.5rem;
-    /* Altın Sarısı Degrade Yazı */
     background: linear-gradient(to right, #ffd700, #ffaa00);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -56,7 +54,7 @@ header h1 {
 }
 
 /* =========================================
-   3. ARAMA ÇUBUĞU VE FİLTRELER
+   ARAMA VE FİLTRELER
    ========================================= */
 .search-container {
     position: relative;
@@ -66,7 +64,7 @@ header h1 {
 
 #search-input {
     width: 100%;
-    padding: 15px 20px 15px 55px; /* İkon için soldan boşluk */
+    padding: 15px 20px 15px 55px;
     border-radius: 30px;
     border: 1px solid #333;
     background-color: #1e2129;
@@ -75,11 +73,11 @@ header h1 {
     outline: none;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     transition: all 0.3s ease;
-    box-sizing: border-box; /* Padding taşmasını önler */
+    box-sizing: border-box;
 }
 
 #search-input:focus {
-    border-color: #ffd700; /* Odaklanınca altın rengi */
+    border-color: #ffd700;
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
     background-color: #252933;
 }
@@ -93,7 +91,6 @@ header h1 {
     font-size: 1.2rem;
 }
 
-/* Kategori Butonları */
 .filter-container {
     display: flex;
     justify-content: center;
@@ -128,11 +125,10 @@ header h1 {
 }
 
 /* =========================================
-   4. GALERİ VE KART TASARIMI
+   GALERİ YAPISI
    ========================================= */
 .gallery-container {
     display: grid;
-    /* Responsive Grid: Ekran küçüldükçe sütun sayısını ayarlar */
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 25px;
     max-width: 1200px;
@@ -144,7 +140,7 @@ header h1 {
     position: relative;
     border-radius: 20px;
     overflow: hidden;
-    height: 450px; /* Kart yüksekliği */
+    height: 450px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     background-color: #1a1d24;
@@ -160,14 +156,13 @@ header h1 {
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
-    cursor: zoom-in; /* Büyüteç ikonu */
+    cursor: zoom-in;
 }
 
 .card:hover .card-img {
-    transform: scale(1.05); /* Resim hafif yakınlaşsın */
+    transform: scale(1.05);
 }
 
-/* Kartın Üzerindeki Karartı ve Yazılar */
 .card-overlay {
     position: absolute;
     bottom: 0;
@@ -180,10 +175,9 @@ header h1 {
     justify-content: flex-end;
     padding: 20px;
     box-sizing: border-box;
-    pointer-events: none; /* Tıklamalar arkadaki resme geçsin diye */
+    pointer-events: none;
 }
 
-/* Overlay içindeki butonlara tıklanabilsin */
 .card-overlay * {
     pointer-events: auto;
 }
@@ -192,7 +186,6 @@ header h1 {
     font-size: 0.95rem;
     color: #e0e0e0;
     margin-bottom: 15px;
-    /* 3 satırdan fazlasını gizle */
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -200,7 +193,6 @@ header h1 {
     text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
-/* Kopyala / Kilit Butonu */
 .copy-btn {
     background-color: rgba(255, 255, 255, 0.15);
     border: 1px solid rgba(255,255,255,0.3);
@@ -223,7 +215,6 @@ header h1 {
     transform: scale(1.05);
 }
 
-/* Premium Rozeti */
 .premium-badge {
     position: absolute;
     top: 15px;
@@ -242,12 +233,12 @@ header h1 {
 }
 
 /* =========================================
-   5. MODAL (REKLAM PENCERESİ) TASARIMI
+   MODAL VE PENCERELER
    ========================================= */
 .modal {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85); /* Arka plan karartması */
+    background: rgba(0,0,0,0.85);
     backdrop-filter: blur(5px);
     display: flex;
     justify-content: center;
@@ -257,7 +248,6 @@ header h1 {
     transition: opacity 0.3s ease;
 }
 
-/* Gizleme sınıfı */
 .hidden {
     display: none !important;
 }
@@ -309,9 +299,7 @@ header h1 {
     filter: brightness(1.1);
 }
 
-/* =========================================
-   6. LIGHTBOX (RESİM BÜYÜTME)
-   ========================================= */
+/* Lightbox Resmi */
 .modal-image-content {
     margin: auto;
     display: block;
@@ -344,33 +332,37 @@ header h1 {
 }
 
 /* =========================================
-   7. TOAST BİLDİRİMİ (BALON)
+   TOAST BİLDİRİMİ (DÜZELTİLDİ)
    ========================================= */
 .toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px); /* Başlangıçta aşağıda gizli */
-    background-color: #22c55e; /* Yeşil renk */
-    color: white;
-    padding: 12px 30px;
+    visibility: hidden; /* Başlangıçta gizli */
+    min-width: 250px;
+    background-color: #22c55e; /* Yeşil Renk */
+    color: #fff;
+    text-align: center;
     border-radius: 50px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    padding: 16px;
+    position: fixed;
+    z-index: 10000; /* En ön planda olması için çok yüksek sayı */
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    font-size: 16px;
     font-weight: bold;
-    z-index: 3000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     opacity: 0;
-    visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Yaylanma efekti */
+    transition: opacity 0.3s, bottom 0.3s;
 }
 
+/* Javascript bu sınıfı ekleyince görünür olacak */
 .toast.show {
-    opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0); /* Yukarı fırlasın */
+    opacity: 1;
+    bottom: 50px; /* Hafif yukarı kayma efekti */
 }
 
 /* =========================================
-   8. FOOTER
+   FOOTER
    ========================================= */
 footer {
     margin-top: 80px;
@@ -409,34 +401,11 @@ footer {
 }
 
 /* =========================================
-   9. MOBİL UYUMLULUK (MEDIA QUERIES)
+   MOBİL AYARLARI
    ========================================= */
 @media (max-width: 600px) {
-    header h1 {
-        font-size: 1.8rem; /* Mobilde başlığı küçült */
-    }
-    
-    .logo {
-        width: 45px; /* Mobilde logoyu küçült */
-    }
-
-    .gallery-container {
-        grid-template-columns: 1fr; /* Mobilde tek sütun olsun */
-        padding: 0 15px;
-    }
-
-    .card {
-        height: 350px; /* Mobilde kartlar daha kısa olabilir */
-    }
-
-    .search-container {
-        width: 100%;
-    }
-
-    .filter-btn {
-        padding: 8px 15px;
-        font-size: 0.8rem;
-        flex-grow: 1; /* Butonlar tüm genişliği kaplasın */
-        text-align: center;
-    }
+    header h1 { font-size: 1.8rem; }
+    .gallery-container { grid-template-columns: 1fr; }
+    .card { height: 350px; }
+    .filter-btn { flex-grow: 1; text-align: center; }
 }

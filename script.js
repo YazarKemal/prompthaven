@@ -1,51 +1,59 @@
 /* =========================================
-   PROMPT LİSTESİ VE HTML ELEMENTLERİ
+   1. VERİTABANI (SİTE İÇERİĞİ)
    ========================================= */
 const prompts = [
     {
         id: 1,
-        image: "https://image.lexica.art/full_jpg/09a06148-5226-4447-9f6f-d90060932a32",
-        text: "Cyberpunk style cat sitting on a neon roof, futuristic city background, cinematic lighting, 8k resolution.",
-        isPremium: false,
-        category: "cyberpunk"
+        image: "images/autumn-fashion.png", 
+        text: "Create an ultra-realistic autumn fashion editorial portrait of a [MODEL: Mature Gentleman] walking outdoors on a [LOCATION: University Campus]. He is dressed in a [OUTFIT: Rich Brown Wool Blazer layered over a Cream-Colored Turtleneck Sweater] and Tan Corduroy Trousers. The background shows stone steps and fallen orange leaves. Style: cinematic, cozy autumn atmosphere, shallow depth of field, 4K detail.",
+        isPremium: false, 
+        category: "boydan"
     },
     {
         id: 2,
-        image: "https://image.lexica.art/full_jpg/2b769642-8926-4643-9831-27909cd3501a",
-        text: "A portrait of a warrior princess with golden armor, intricate details, fantasy style, oil painting texture.",
-        isPremium: true,
-        category: "portre"
+        image: "images/stylish-man.png",
+        text: "Create an ultra-realistic winter fashion editorial portrait of a [MODEL: Stylish Man] walking outdoors in [LIGHTING: Soft Morning Sunlight]. He wears a [OUTFIT: Long Tailored Camel-Colored Overcoat layered over a Thick Cable-Knit Turtleneck] and High-Waisted Wool Trousers. Background shows an urban square with bare winter trees. Style: luxury menswear, neutral monochrome palette, cinematic winter atmosphere, 4K ultra-detailed fabric textures.",
+        isPremium: true, 
+        category: "boydan"
     },
     {
         id: 3,
-        image: "https://image.lexica.art/full_jpg/3e8d281f-4734-4581-a64e-0b0475308693",
-        text: "Cute isometric 3d render of a coffee shop, pastel colors, soft lighting, blender 3d style.",
-        isPremium: false,
-        category: "3d"
+        image: "images/gentleman-portrait.png", 
+        text: "Create an ultra-realistic, dramatic close-up portrait of a [MODEL: Sharply Dressed 1920s Gentleman] in a [LOCATION: Dimly Lit Room]. A [PROP: Lit Cigarette] rests between his lips, producing swirling smoke. He wears a [OUTFIT: Dark Tailored Wool Suit and Vintage Tie]. Warm, cinematic rim-lighting highlights one side of his face. Style: gritty noir-inspired aesthetic, ultra-detailed skin texture, shot on vintage cinema lens.",
+        isPremium: true, 
+        category: "portre"
     },
     {
         id: 4,
-        image: "https://image.lexica.art/full_jpg/00234208-8e69-424a-9e0d-5c6838384568",
-        text: "Astronaut walking in a flower field on mars, surrealism, vibrant colors, highly detailed.",
-        isPremium: true,
-        category: "manzara"
+        image: "images/gentleman-sitting.png", 
+        text: "Create an ultra-realistic, formal seated portrait of a [MODEL: 1920s Gentleman] sitting confidently in a [FURNITURE: Large Vintage Leather Armchair]. He wears a [OUTFIT: Perfectly Tailored Dark Three-Piece Suit] with a gold pocket watch chain. Expression is calm and authoritative. Lighting is soft and cinematic. Style: high-budget period drama portrait, 4K, museum-quality character portrait.",
+        isPremium: false,
+        category: "portre"
     },
+    {
+        id: 5,
+        image: "images/standing-man.png",
+        text: "Create an ultra-realistic fashion editorial portrait of a [MODEL: Young Man] standing outdoors on [LOCATION: Stone Steps in front of Classical Architecture]. He wears a [OUTFIT: Loose Textured Beige V-Neck Sweater layered over an Off-White Button-Down Shirt] and Wide-Leg Brown Trousers. He carries a brown backpack. Style: luxury streetwear meets modern European editorial, warm and earthy color palette, soft cinematic lighting.",
+        isPremium: false, 
+        category: "boydan"
+    }
 ];
 
+/* =========================================
+   2. HTML ELEMENTLERİ
+   ========================================= */
 const gallery = document.getElementById('gallery');
 const searchInput = document.getElementById('search-input');
 const toast = document.getElementById('toast');
 const modal = document.getElementById('ad-modal');
 const watchBtn = document.getElementById('watch-ad-btn');
 const closeBtn = document.getElementById('close-modal');
-// YENİ: Lightbox elementleri
 const imageModal = document.getElementById('image-modal');
 const lightboxImg = document.getElementById('lightbox-img');
-
-let currentPremiumPrompt = "";
+let currentPremiumPrompt = ""; 
 
 /* =========================================
-   GALERİYİ ÇİZME FONKSİYONU (GÜNCELLENDİ)
+   3. GALERİYİ ÇİZME (RENDER)
    ========================================= */
 function renderGallery(dataList) {
     gallery.innerHTML = ""; 
@@ -60,7 +68,6 @@ function renderGallery(dataList) {
         const btnIcon = item.isPremium ? '<i class="fa-solid fa-lock"></i> Kilidi Aç' : '<i class="fa-regular fa-copy"></i> Kopyala';
         const safeText = item.text.replace(/'/g, "\\'");
 
-        // DİKKAT: img etiketine 'onclick' özelliği eklendi!
         const cardHTML = `
             <div class="card">
                 <img src="${item.image}" alt="AI Art" class="card-img" loading="lazy" onclick="openLightbox('${item.image}')">
@@ -78,7 +85,7 @@ function renderGallery(dataList) {
 }
 
 /* =========================================
-   ARAMA VE FİLTRELEME
+   4. ARAMA VE FİLTRELEME
    ========================================= */
 searchInput.addEventListener('input', (e) => {
     const searchTerm = e.target.value.toLowerCase();
@@ -101,7 +108,7 @@ filterBtns.forEach(btn => {
 });
 
 /* =========================================
-   TOAST, KOPYALAMA VE REKLAM
+   5. GÜÇLENDİRİLMİŞ KOPYALAMA SİSTEMİ
    ========================================= */
 function showToast(message) {
     toast.innerText = message;
@@ -118,19 +125,61 @@ window.handleCopy = (text, isPremium) => {
     }
 };
 
+// YENİ: Hem modern hem eski tarayıcılar (ve yerel dosyalar) için kopyalama
 function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        showToast("Prompt Başarıyla Kopyalandı! ✅");
-    }).catch(err => { console.error('Hata:', err); });
+    // Yöntem 1: Modern API (HTTPS gerektirir)
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast("Kopyalandı! ✅");
+        }).catch(err => {
+            console.error('Modern kopya hatası:', err);
+            // Hata verirse Yöntem 2'yi dene
+            fallbackCopy(text);
+        });
+    } else {
+        // Yöntem 2: Güvenli olmayan ortamlar (Yerel dosya) için
+        fallbackCopy(text);
+    }
 }
 
+// Yöntem 2: B Planı (Görünmez kutu oluşturup kopyalar)
+function fallbackCopy(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed"; // Görünmemesi için
+    textArea.style.left = "-9999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showToast("Kopyalandı! ✅");
+        } else {
+            showToast("Kopyalama başarısız ❌");
+        }
+    } catch (err) {
+        console.error('B Planı hatası:', err);
+        showToast("Hata oluştu.");
+    }
+    document.body.removeChild(textArea);
+}
+
+/* =========================================
+   6. REKLAM ZAMANLAYICISI (3 SANİYE)
+   ========================================= */
 watchBtn.addEventListener('click', () => {
-    watchBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Reklam Yükleniyor...';
+    watchBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Yükleniyor...';
+    watchBtn.style.pointerEvents = "none";
+
     setTimeout(() => {
         modal.classList.add('hidden');
-        copyToClipboard(currentPremiumPrompt);
+        copyToClipboard(currentPremiumPrompt); // Burası da artık B Planını kullanabilir
+        
         watchBtn.innerHTML = '<i class="fa-solid fa-play"></i> Reklamı İzle (Demo)';
-    }, 2000);
+        watchBtn.style.pointerEvents = "auto";
+    }, 3000); 
 });
 
 closeBtn.addEventListener('click', () => {
@@ -138,23 +187,18 @@ closeBtn.addEventListener('click', () => {
 });
 
 /* =========================================
-   YENİ: LIGHTBOX (RESİM BÜYÜTME) FONKSİYONLARI
+   7. LIGHTBOX
    ========================================= */
-// Resmi açan fonksiyon
 function openLightbox(imageUrl) {
-    lightboxImg.src = imageUrl; // Tıklanan resmin linkini modalın içine koy
-    imageModal.classList.remove('hidden'); // Modalı görünür yap
+    lightboxImg.src = imageUrl;
+    imageModal.classList.remove('hidden');
 }
 
-// Resmi kapatan fonksiyon
 function closeLightbox(event) {
-    // Eğer tıklanan yer resmin kendisi değilse (yani siyah boşluksa veya X butonuyse) kapat
     if (event.target !== lightboxImg) {
         imageModal.classList.add('hidden');
     }
 }
 
-/* =========================================
-   BAŞLANGIÇ
-   ========================================= */
+// Başlangıç
 renderGallery(prompts);
