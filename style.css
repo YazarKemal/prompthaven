@@ -508,3 +508,71 @@ header h1 {
         background-position: 50px 50px; 
     }
 }
+/* --- FAVORİ KALP BUTONU --- */
+.fav-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px; /* Sol üst köşe */
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    color: #fff; /* Boş kalp rengi */
+    font-size: 1.1rem;
+    cursor: pointer;
+    z-index: 20; /* Resmin üzerinde olsun */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fav-btn:hover {
+    background: white;
+    color: #ff4757;
+    transform: scale(1.1);
+}
+
+/* Kalp Dolu (Aktif) Hali */
+.fav-btn.active {
+    background-color: #ff4757; /* Kırmızı zemin */
+    color: white; /* Beyaz kalp */
+    box-shadow: 0 0 15px rgba(255, 71, 87, 0.5);
+}
+
+/* Tıklama Animasyonu */
+.fav-btn:active {
+    transform: scale(0.9);
+}
+/* --- PAYLAŞIM ALANI DÜZENİ --- */
+.card-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Butonlar arası boşluk */
+    width: 100%;
+}
+
+/* Paylaş Butonu Stili */
+.share-btn {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    width: 42px; /* Karemsi olsun */
+    height: 42px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.share-btn:hover {
+    background: #3b82f6; /* Mavi renk (Twitter/Paylaşım rengi) */
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+}

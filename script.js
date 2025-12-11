@@ -1,5 +1,5 @@
 /* =========================================
-   1. VERİTABANI (SİTE İÇERİĞİ)
+   1. VERİTABANI (MEVCUT VERİLERİN)
    ========================================= */
 const prompts = [
     {
@@ -27,7 +27,7 @@ const prompts = [
         id: 4,
         image: "images/gentleman-sitting.png", 
         text: "Create an ultra-realistic, formal seated portrait of a [MODEL: 1920s Gentleman] sitting confidently in a [FURNITURE: Large Vintage Leather Armchair]. He wears a [OUTFIT: Perfectly Tailored Dark Three-Piece Suit] with a gold pocket watch chain. Expression is calm and authoritative. Lighting is soft and cinematic. Style: high-budget period drama portrait, 4K, museum-quality character portrait.",
-        isPremium: false,
+        isPremium: false, 
         category: "portre"
     },
     {
@@ -40,7 +40,7 @@ const prompts = [
 ];
 
 /* =========================================
-   2. HTML ELEMENTLERİ
+   2. HTML ELEMENTLERİ VE DEĞİŞKENLER
    ========================================= */
 const gallery = document.getElementById('gallery');
 const searchInput = document.getElementById('search-input');
@@ -52,39 +52,52 @@ const imageModal = document.getElementById('image-modal');
 const lightboxImg = document.getElementById('lightbox-img');
 let currentPremiumPrompt = ""; 
 
+// Favorileri Yükle
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
 /* =========================================
-   3. GALERİYİ ÇİZME (RENDER)
-   ========================================= */
-/* =========================================
-   3. GALERİYİ ÇİZME (ANIMASYONLU)
+   3. GALERİYİ ÇİZME (PAYLAŞ BUTONU EKLENDİ)
    ========================================= */
 function renderGallery(dataList) {
     gallery.innerHTML = ""; 
 
     if (dataList.length === 0) {
-        gallery.innerHTML = "<p style='text-align:center; width:100%; color:#888; margin-top:50px;'>Aradığınız kriterde prompt bulunamadı. 😔</p>";
+        gallery.innerHTML = "<p style='text-align:center; width:100%; color:#888; margin-top:50px;'>Bu kriterde prompt bulunamadı. 😔</p>";
         return;
     }
     
-    // index parametresini ekledik (sırayı bilmek için)
     dataList.forEach((item, index) => {
         const badgeHTML = item.isPremium ? `<div class="premium-badge"><i class="fa-solid fa-crown"></i> PREMIUM</div>` : '';
         const btnIcon = item.isPremium ? '<i class="fa-solid fa-lock"></i> Kilidi Aç' : '<i class="fa-regular fa-copy"></i> Kopyala';
         const safeText = item.text.replace(/'/g, "\\'");
 
-        // ANİMASYON GECİKMESİ HESAPLAMA
-        // Her kart bir öncekinden 0.1 saniye sonra gelecek.
-        // style="animation-delay: ${index * 0.1}s"
-        
+        // Favori Durumu
+        const isFav = favorites.includes(item.id);
+        const heartClass = isFav ? 'fa-solid' : 'fa-regular'; 
+        const activeClass = isFav ? 'active' : '';
+
         const cardHTML = `
             <div class="card" style="animation-delay: ${index * 0.1}s">
                 <img src="${item.image}" alt="AI Art" class="card-img" loading="lazy" onclick="openLightbox('${item.image}')">
                 ${badgeHTML}
+                
+                <button class="fav-btn ${activeClass}" onclick="toggleFavorite(${item.id})">
+                    <i class="${heartClass} fa-heart"></i>
+                </button>
+
                 <div class="card-overlay">
                     <p class="prompt-text">${item.text}</p>
-                    <button class="copy-btn" onclick="handleCopy('${safeText}', ${item.isPremium})">
-                        ${btnIcon}
-                    </button>
+                    
+                    <div class="card-actions">
+                        <button class="copy-btn" onclick="handleCopy('${safeText}', ${item.isPremium})" style="flex-grow:1; justify-content:center;">
+                            ${btnIcon}
+                        </button>
+                        
+                        <button class="share-btn" onclick="handleShare('${safeText}')" title="Paylaş">
+                            <i class="fa-solid fa-share-nodes"></i>
+                        </button>
+                    </div>
+
                 </div>
             </div>
         `;
@@ -93,7 +106,59 @@ function renderGallery(dataList) {
 }
 
 /* =========================================
-   4. ARAMA VE FİLTRELEME
+   4. PAYLAŞIM ÖZELLİĞİ (YENİ)
+   ========================================= */
+async function handleShare(text) {
+    // Paylaşılacak veri
+    const shareData = {
+        title: 'PromptHaven',
+        text: text + "\n\n🚀 Bu harika promptu PromptHaven'da buldum!",
+        url: window.location.href // Sitenin o anki linki
+    };
+
+    // 1. Yöntem: Native Share (Mobil Öncelikli)
+    if (navigator.share) {
+        try {
+            await navigator.share(shareData);
+            showToast("Paylaşım menüsü açıldı 📲");
+        } catch (err) {
+            console.log('Paylaşım iptal edildi veya hata oluştu.');
+        }
+    } else {
+        // 2. Yöntem: Bilgisayardaysa WhatsApp Web'e gönder (Fallback)
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareData.text + " " + shareData.url)}`;
+        window.open(whatsappUrl, '_blank');
+        showToast("WhatsApp açılıyor... 💬");
+    }
+}
+
+/* =========================================
+   5. FAVORİ İŞLEMLERİ
+   ========================================= */
+function toggleFavorite(id) {
+    if (favorites.includes(id)) {
+        favorites = favorites.filter(favId => favId !== id);
+        showToast("Favorilerden çıkarıldı 💔");
+    } else {
+        favorites.push(id);
+        showToast("Favorilere eklendi ❤️");
+    }
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+
+    const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+    if (activeFilter === 'favorites') {
+        const favPrompts = prompts.filter(item => favorites.includes(item.id));
+        renderGallery(favPrompts);
+    } else {
+        // Favori olmayan ekrandaysak da kalp ikonunu güncellemek için
+        const categoryValue = activeFilter;
+        if (categoryValue === 'all') renderGallery(prompts);
+        else renderGallery(prompts.filter(item => item.category === categoryValue));
+    }
+}
+
+/* =========================================
+   6. ARAMA VE FİLTRELER
    ========================================= */
 searchInput.addEventListener('input', (e) => {
     const searchTerm = e.target.value.toLowerCase();
@@ -106,9 +171,14 @@ filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelector('.filter-btn.active').classList.remove('active');
         btn.classList.add('active');
+        
         const categoryValue = btn.getAttribute('data-filter');
+        
         if (categoryValue === 'all') {
             renderGallery(prompts);
+        } else if (categoryValue === 'favorites') {
+            const favPrompts = prompts.filter(item => favorites.includes(item.id));
+            renderGallery(favPrompts);
         } else {
             renderGallery(prompts.filter(item => item.category === categoryValue));
         }
@@ -116,7 +186,7 @@ filterBtns.forEach(btn => {
 });
 
 /* =========================================
-   5. GÜÇLENDİRİLMİŞ KOPYALAMA SİSTEMİ
+   7. KOPYALAMA
    ========================================= */
 function showToast(message) {
     toast.innerText = message;
@@ -133,79 +203,56 @@ window.handleCopy = (text, isPremium) => {
     }
 };
 
-// YENİ: Hem modern hem eski tarayıcılar (ve yerel dosyalar) için kopyalama
 function copyToClipboard(text) {
-    // Yöntem 1: Modern API (HTTPS gerektirir)
     if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(text).then(() => {
             showToast("Kopyalandı! ✅");
-        }).catch(err => {
-            console.error('Modern kopya hatası:', err);
-            // Hata verirse Yöntem 2'yi dene
-            fallbackCopy(text);
-        });
+        }).catch(() => fallbackCopy(text));
     } else {
-        // Yöntem 2: Güvenli olmayan ortamlar (Yerel dosya) için
         fallbackCopy(text);
     }
 }
 
-// Yöntem 2: B Planı (Görünmez kutu oluşturup kopyalar)
 function fallbackCopy(text) {
     const textArea = document.createElement("textarea");
     textArea.value = text;
-    textArea.style.position = "fixed"; // Görünmemesi için
-    textArea.style.left = "-9999px";
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
-
     try {
         const successful = document.execCommand('copy');
-        if (successful) {
-            showToast("Kopyalandı! ✅");
-        } else {
-            showToast("Kopyalama başarısız ❌");
-        }
+        showToast(successful ? "Kopyalandı! ✅" : "Hata oluştu ❌");
     } catch (err) {
-        console.error('B Planı hatası:', err);
         showToast("Hata oluştu.");
     }
     document.body.removeChild(textArea);
 }
 
 /* =========================================
-   6. REKLAM ZAMANLAYICISI (3 SANİYE)
+   8. REKLAM VE LIGHTBOX
    ========================================= */
 watchBtn.addEventListener('click', () => {
     watchBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Yükleniyor...';
     watchBtn.style.pointerEvents = "none";
-
     setTimeout(() => {
         modal.classList.add('hidden');
-        copyToClipboard(currentPremiumPrompt); // Burası da artık B Planını kullanabilir
-        
+        copyToClipboard(currentPremiumPrompt);
         watchBtn.innerHTML = '<i class="fa-solid fa-play"></i> Reklamı İzle (Demo)';
         watchBtn.style.pointerEvents = "auto";
     }, 3000); 
 });
 
-closeBtn.addEventListener('click', () => {
-    modal.classList.add('hidden');
-});
+closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
 
-/* =========================================
-   7. LIGHTBOX
-   ========================================= */
 function openLightbox(imageUrl) {
     lightboxImg.src = imageUrl;
     imageModal.classList.remove('hidden');
 }
 
 function closeLightbox(event) {
-    if (event.target !== lightboxImg) {
-        imageModal.classList.add('hidden');
-    }
+    if (event.target !== lightboxImg) imageModal.classList.add('hidden');
 }
 
 // Başlangıç
