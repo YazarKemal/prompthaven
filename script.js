@@ -30,15 +30,109 @@ const provider = new GoogleAuthProvider();
 /* =========================================
    2. VERİTABANI (PROMPTLAR)
    ========================================= */
-const FILE_EXTENSION = ".png"; 
+/* =========================================
+   2. VERİTABANI (PROMPTLAR)
+   ========================================= */
 
-// Örnek Veriler (Resim yollarının doğruluğundan emin ol)
 const prompts = [
-    { id: 1, image: `images/autumn-fashion${FILE_EXTENSION}`, text: "Create an ultra-realistic autumn fashion...", isPremium: false, category: "boydan" },
-    { id: 2, image: `images/stylish-man${FILE_EXTENSION}`, text: "Create an ultra-realistic winter fashion...", isPremium: true, category: "boydan" },
-    { id: 3, image: `images/gentleman-portrait${FILE_EXTENSION}`, text: "Create an ultra-realistic, dramatic...", isPremium: true, category: "portre" },
-    { id: 4, image: `images/gentleman-sitting${FILE_EXTENSION}`, text: "Create an ultra-realistic, formal...", isPremium: false, category: "portre" },
-    { id: 5, image: `images/standing-man${FILE_EXTENSION}`, text: "Create an ultra-realistic fashion...", isPremium: false, category: "boydan" }
+    // --- ESKİLER (1-5) (Zaten PNG idi) ---
+    { id: 1, image: `images/autumn-fashion.png`, text: "Create an ultra-realistic autumn fashion...", isPremium: false, category: "boydan" },
+    { id: 2, image: `images/stylish-man.png`, text: "Create an ultra-realistic winter fashion...", isPremium: true, category: "boydan" },
+    { id: 3, image: `images/gentleman-portrait.png`, text: "Create an ultra-realistic, dramatic...", isPremium: true, category: "portre" },
+    { id: 4, image: `images/gentleman-sitting.png`, text: "Create an ultra-realistic, formal...", isPremium: false, category: "portre" },
+    { id: 5, image: `images/standing-man.png`, text: "Create an ultra-realistic fashion...", isPremium: false, category: "boydan" },
+
+    // --- YENİ EKLENENLER (6-15) (PNG OLARAK DÜZELTİLDİ) ---
+    
+    // 6. Karizma Men (Portre - Premium)
+    { 
+        id: 6, 
+        image: `images/karizma-men.png`, 
+        text: `European intellectual interior portrait, minimalist modern classic aesthetic with academic calm, a man seated casually on a low sofa against a raw concrete wall, asymmetrical composition with large negative space on one side, relaxed but focused posture, legs crossed, body slightly leaning back, one hand holding a pen and writing in a notebook resting on the lap.`, 
+        isPremium: true, 
+        category: "portre" 
+    },
+
+    // 7. John Wick Tarzı (Aksiyon - Premium)
+    { 
+        id: 7, 
+        image: `images/john-wick.png`, 
+        text: `Modern neo-noir urban action portrait, grounded realism with restrained intensity, a man frozen mid-moment in a tense street confrontation, low athletic stance, knees bent, weight forward, tailored dark suit worn and weathered, subtle damage and dirt visible, minimal, functional gear integrated discreetly into the outfit.`, 
+        isPremium: true, 
+        category: "boydan" 
+    },
+
+    // 8. Komutan Bey (Yağlı Boya - Premium)
+    { 
+        id: 8, 
+        image: `images/komutar-bey.png`, 
+        text: `Classical oil painting portrait, late 18th to early 19th century European military aesthetic, romantic realism with baroque lighting influence, dramatic chiaroscuro, face emerging from deep shadow, intense frontal portrait composition, solemn, determined expression, subtle emotional gravity.`, 
+        isPremium: true, 
+        category: "portre" 
+    },
+
+    // 9. Black Men (Moda - Ücretsiz)
+    { 
+        id: 9, 
+        image: `images/black-men.png`, 
+        text: `Modern European intellectual fashion portrait, minimalist masculine elegance with classical proportions, a man standing in front of monumental stone columns and urban architecture, cool neutral daylight, overcast atmosphere, long tailored dark navy or charcoal overcoat.`, 
+        isPremium: false, 
+        category: "boydan" 
+    },
+
+    // 10. Tactical Men (Askeri - Premium)
+    { 
+        id: 10, 
+        image: `images/tactical-men.png`, 
+        text: `Modern cinematic action realism with grounded physical intensity, contemporary conflict zone street scene, a man caught mid-motion in a defensive combat stance, wide grounded posture, knees bent, center of gravity low, one arm extended forward in a protective gesture, the other arm pulled back holding a short combat knife.`, 
+        isPremium: true, 
+        category: "boydan" 
+    },
+
+    // 11. Clark Kent Tarzı (Sokak - Ücretsiz)
+    { 
+        id: 11, 
+        image: `images/clark-kent.png`, 
+        text: `European intellectual street portrait, timeless vintage-modern aesthetic, a man sitting casually on a simple public bench in an urban street, relaxed posture, one leg extended forward, hands resting naturally, long brown wool overcoat worn open, soft and slightly oversized.`, 
+        isPremium: false, 
+        category: "boydan" 
+    },
+
+    // 12. Thinking Men (Düşünen Adam - Ücretsiz)
+    { 
+        id: 12, 
+        image: `images/thinking-men.png`, 
+        text: `European intellectual interior portrait, intimate writer’s solitude with classical restraint, a man seated alone in an antique upholstered armchair, body slightly turned to the side, relaxed yet inward posture, one elbow resting on the armrest, hand supporting the face in a thinking gesture.`, 
+        isPremium: false, 
+        category: "portre" 
+    },
+
+    // 13. Shooter Men (Silahlı - Premium)
+    { 
+        id: 13, 
+        image: `images/shooter-men.png`, 
+        text: `Classic neo-noir close-up portrait, restrained masculine authority with minimal emotion, tight frontal composition focused on the subject’s face and hands, a man holding a handgun directly toward the camera plane, arms steady, wrists aligned, posture rigid and controlled.`, 
+        isPremium: true, 
+        category: "portre" 
+    },
+
+    // 14. Europan Men (Klasik - Ücretsiz)
+    { 
+        id: 14, 
+        image: `images/europan-men.png`, 
+        text: `Refined European menswear portrait photography, timeless classic style with modern minimal elegance, a man standing outdoors in front of historic stone architecture, neutral urban courtyard setting, subtle winter atmosphere, fitted ribbed knit long-sleeve polo sweater in deep brown tones.`, 
+        isPremium: false, 
+        category: "boydan" 
+    },
+
+    // 15. Gray Men (Gri Tonlar - Ücretsiz)
+    { 
+        id: 15, 
+        image: `images/gray-men.png`, 
+        text: `Modern European intellectual fashion portrait, minimalist masculine elegance with classical proportions, a man standing in front of monumental stone columns and urban architecture, cool neutral daylight, overcast atmosphere, long tailored dark navy or charcoal overcoat, fitted black or dark grey turtleneck sweater.`, 
+        isPremium: false, 
+        category: "boydan" 
+    }
 ];
 
 // Element Seçicileri
@@ -314,51 +408,94 @@ if (closeAdBtn) {
 /* =========================================
    7. GALERİ RENDER (TEK VE DÜZGÜN FONKSİYON)
    ========================================= */
-function renderGallery(dataList) {
+/* =========================================
+   SONSUZ SCROLL İÇİN YENİ DEĞİŞKENLER
+   (Bunları script.js'in en üstüne, diğer değişkenlerin yanına ekle)
+   ========================================= */
+let activePrompts = []; // Şu an filtrelenmiş, gösterilmeyi bekleyen tüm liste
+let loadedCount = 0;    // Ekrana basılmış sayı
+const BATCH_SIZE = 8;   // İlk açılışta kaç tane gelsin?
+const LOAD_MORE_COUNT = 4; // Aşağı indikçe kaçar kaçar gelsin?
+let isLoading = false;  // Şu an yükleme yapıyor mu?
+
+/* =========================================
+   7. YENİ AKILLI GALERİ SİSTEMİ (RENDER)
+   (Eski renderGallery fonksiyonunu sil, bunu yapıştır)
+   ========================================= */
+function renderGallery(dataList, isScroll = false) {
     if (!gallery) return;
 
-    // Filtreleme
-    const activeFilterBtn = document.querySelector('.filter-btn.active');
-    const activeFilter = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all';
-
-    let filtered = [...dataList];
-
-    if (activeFilter === "favorites" && userData) {
-        filtered = filtered.filter(item => userData.favorites.includes(item.id));
-    } else if (activeFilter !== "all" && activeFilter) {
-        filtered = filtered.filter(item => item.category === activeFilter);
-    }
-
-    gallery.innerHTML = "";
-
-    if (filtered.length === 0) {
-        gallery.innerHTML = "<p style='text-align:center;color:#aaa;margin-top:50px;width:100%;'>Bu kategoride içerik yok.</p>";
-        return;
-    }
-
-    filtered.forEach((item, index) => {
-        // --- BUTTON MANTIĞI ---
-        const badgeHTML = item.isPremium ? `<div class="premium-badge"><i class="fa-solid fa-crown"></i> PREMIUM</div>` : '';
+    // A) EĞER BU BİR SCROLL YÜKLEMESİ DEĞİLSE (Yani filtre değiştiyse veya sayfa yeni açıldıysa)
+    if (!isScroll) {
+        gallery.innerHTML = ""; // Ekranı temizle
+        loadedCount = 0;        // Sayacı sıfırla
         
-        // Varsayılan (Free) Buton
+        // 1. Filtreleme Mantığı
+        const activeFilterBtn = document.querySelector('.filter-btn.active');
+        const activeFilter = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all';
+
+        activePrompts = [...dataList]; // Ana listeyi kopyala
+
+        if (activeFilter === "favorites" && userData) {
+            activePrompts = activePrompts.filter(item => userData.favorites.includes(item.id));
+        } else if (activeFilter !== "all" && activeFilter) {
+            activePrompts = activePrompts.filter(item => item.category === activeFilter);
+        }
+
+        // Eğer hiç sonuç yoksa
+        if (activePrompts.length === 0) {
+            gallery.innerHTML = "<p style='text-align:center;color:#aaa;margin-top:50px;width:100%;grid-column:1/-1;'>Bu kategoride içerik yok.</p>";
+            return;
+        }
+
+        // Yükleniyor spinner'ını ekle (En alta)
+        const spinnerDiv = document.createElement('div');
+        spinnerDiv.id = 'loading-indicator';
+        spinnerDiv.className = 'loading-spinner';
+        spinnerDiv.innerHTML = '<div class="spinner-icon"></div>';
+        gallery.appendChild(spinnerDiv);
+    }
+
+    // B) LİSTEDEN YENİ PARÇAYI AL VE BAS
+    // İlk açılışsa BATCH_SIZE kadar, scroll ise LOAD_MORE_COUNT kadar al
+    const limit = isScroll ? LOAD_MORE_COUNT : BATCH_SIZE;
+    
+    // Hangi aralığı keseceğiz?
+    const nextBatch = activePrompts.slice(loadedCount, loadedCount + limit);
+
+    // Yükleniyor simgesini bul (en sona eklemiştik)
+    const spinner = document.getElementById('loading-indicator');
+
+    nextBatch.forEach((item, index) => {
+        // Kart HTML'ini oluştur
+        const badgeHTML = item.isPremium ? `<div class="premium-badge"><i class="fa-solid fa-crown"></i> PREMIUM</div>` : '';
         let btnText = 'Kopyala';
         let btnIcon = '<i class="fa-regular fa-copy"></i>';
         let buttonClass = 'copy-btn';
+        
+        // --- YENİ EKLENEN KISIM: METİN GİZLEME MANTIĞI ---
+        let visibleText = item.text; // Varsayılan: Gerçek metni göster
+        
+        if (item.isPremium) {
+            // Eğer Premium ise metni değiştir
+            visibleText = `
+                <div class="lock-message"><i class="fa-solid fa-lock"></i> Gizli Prompt</div>
+                <div class="premium-blur">Bu prompt gizlenmiştir. Görmek için kilidi açın. Lorem ipsum dolor sit amet...</div>
+            `;
+        }
+        // ------------------------------------------------
+
         let onClickFunc = `handleCopy('${item.text.replace(/'/g, "\\'")}', ${item.isPremium})`;
 
-        // Premium Buton Durumları
         if (item.isPremium) {
             const userBalance = userData ? userData.credits : 0;
-            
             if (userBalance >= PROMPT_COST) {
-                // Parası Yetiyor
                 btnText = `${PROMPT_COST} Kredi`;
                 btnIcon = '<i class="fa-regular fa-gem"></i>';
             } else {
-                // Parası Yetmiyor -> Reklam İzle
-                btnText = 'Kredi Kazan'; // Reklam izlemeye yönlendirir
+                btnText = 'Kredi Kazan';
                 btnIcon = '<i class="fa-solid fa-play"></i>';
-                buttonClass += ' ad-unlock-btn'; // Mor stil
+                buttonClass += ' ad-unlock-btn';
             }
         }
 
@@ -366,36 +503,61 @@ function renderGallery(dataList) {
         const heartClass = isFav ? 'fa-solid' : 'fa-regular';
         const activeClass = isFav ? 'active' : '';
 
-        // HTML Çizimi
-        gallery.innerHTML += `
-            <div class="card" style="animation-delay:${index * 0.05}s">
-                <img src="${item.image}" class="card-img" onclick="openLightbox(${item.id})">
-                ${badgeHTML}
-                <button class="fav-btn ${activeClass}" onclick="toggleFavorite(${item.id})">
-                    <i class="${heartClass} fa-heart"></i>
-                </button>
-                <div class="card-overlay">
-                    <p class="prompt-text">${item.text}</p>
-                    <div class="card-actions">
-                        <button class="${buttonClass}" onclick="${onClickFunc}">
-                            ${btnIcon} ${btnText}
-                        </button>
-                    </div>
+        // Elemanı Yarat
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'card';
+        cardDiv.style.animationDelay = `${index * 0.05}s`; 
+        cardDiv.innerHTML = `
+            <img src="${item.image}" class="card-img" onclick="openLightbox(${item.id})">
+            ${badgeHTML}
+            <button class="fav-btn ${activeClass}" onclick="toggleFavorite(${item.id})">
+                <i class="${heartClass} fa-heart"></i>
+            </button>
+            <div class="card-overlay">
+                <div class="prompt-text">${visibleText}</div> 
+                <div class="card-actions">
+                    <button class="${buttonClass}" onclick="${onClickFunc}">
+                        ${btnIcon} ${btnText}
+                    </button>
                 </div>
             </div>
         `;
+        
+        // ... (Kalan kodlar aynı) ...
+        // Spinner'dan hemen öncesine ekle (Spinner hep en altta kalsın)
+        if (spinner) {
+            gallery.insertBefore(cardDiv, spinner);
+        } else {
+            gallery.appendChild(cardDiv);
+        }
     });
+
+    // Sayacı güncelle
+    loadedCount += nextBatch.length;
+    isLoading = false; // Kilidi aç
+
+    // Hepsi bittiyse Spinner'ı gizle
+    if (loadedCount >= activePrompts.length && spinner) {
+        spinner.style.display = 'none';
+    } else if (spinner) {
+        spinner.style.display = 'block'; // Daha içerik varsa göster
+    }
 }
 
-// Filtre Butonları
-document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderGallery(prompts);
-    });
+// --- SCROLL DİNLEYİCİSİ (Aşağı inince tetiklenir) ---
+window.addEventListener('scroll', () => {
+    // Sayfanın en altına 100px kala tetikle
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+        // Eğer zaten yüklemiyorsa ve daha gösterilecek içerik varsa
+        if (!isLoading && loadedCount < activePrompts.length) {
+            isLoading = true;
+            // Küçük bir yapay gecikme ekleyelim ki "Yükleniyor" animasyonu görünsün (Daha havalı durur)
+            setTimeout(() => {
+                renderGallery(activePrompts, true); // true = scroll modunda çağır
+            }, 500); 
+        }
+    }
 });
-
 /* =========================================
    8. LIGHTBOX & DİĞER YARDIMCILAR
    ========================================= */
@@ -412,34 +574,26 @@ window.openLightbox = (id) => {
     const safeText = item.text.replace(/'/g, "\\'");
 
     lightboxImg.src = item.image;
-    if(modalPromptText) modalPromptText.innerText = item.text;
-    
-    if (item.isPremium) modalBadge.classList.remove('hidden');
-    else modalBadge.classList.add('hidden');
-
-    // Lightbox içindeki Action Button Mantığı
-    if(modalActionBtn) {
-        modalActionBtn.className = "action-btn-large"; 
-        
+   // --- BURASI DEĞİŞTİ ---
+    if(modalPromptText) {
         if (item.isPremium) {
-            const userBalance = userData ? userData.credits : 0;
-            if (userBalance >= PROMPT_COST) {
-                modalActionBtn.innerHTML = `<i class="fa-regular fa-gem"></i> ${PROMPT_COST} Kredi ile Al`;
-                modalActionBtn.style.background = "#fff";
-                modalActionBtn.style.color = "#000";
-            } else {
-                modalActionBtn.innerHTML = `<i class="fa-solid fa-play"></i> Reklam İzle (+${AD_REWARD})`;
-                modalActionBtn.classList.add('ad-unlock-btn-large');
-            }
+            // Premium ise Gizli Mesaj Göster
+            modalPromptText.innerHTML = `
+                <div style="text-align:center; padding: 20px;">
+                    <i class="fa-solid fa-lock" style="font-size: 2rem; color: #ffd700; margin-bottom: 10px;"></i><br>
+                    <span style="color: #fff; font-weight: bold;">Bu Prompt Premium'dur</span><br>
+                    <span style="color: #9ca3af; font-size: 0.9rem;">İçeriği kopyalamak için kredinizi kullanın.</span>
+                    <div class="premium-blur" style="margin-top:15px;">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    </div>
+                </div>
+            `;
         } else {
-            modalActionBtn.innerHTML = `<i class="fa-regular fa-copy"></i> Ücretsiz Kopyala`;
-            modalActionBtn.style.background = "#fff";
-            modalActionBtn.style.color = "#000";
+            // Ücretsiz ise Gerçek Metni Göster
+            modalPromptText.innerText = item.text;
         }
-        
-        modalActionBtn.onclick = () => window.handleCopy(safeText, item.isPremium);
     }
-    
     // Favori Butonu
     const modalFavBtn = document.getElementById('modal-fav-btn');
     if(modalFavBtn) {

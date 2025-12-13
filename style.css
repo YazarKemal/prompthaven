@@ -1250,3 +1250,157 @@ body.no-scroll {
     height: 100vh; /* Yüksekliği ekran kadar yap */
     touch-action: none; /* Dokunmatik kaydırmayı engelle (Telefonda garanti çözüm) */
 }
+/* =========================================
+   Z-INDEX DÜZELTMESİ (PENCERE ÇAKIŞMASI İÇİN)
+   Bunu dosyanın EN SONUNA yapıştır.
+   ========================================= */
+
+/* 1. Modalı (Açılır Pencereyi) UZAYA ÇIKARALIM 🚀 */
+/* Sayı ne kadar yüksekse o kadar önde durur */
+.modal, #login-modal, #register-modal, #ad-modal, #image-modal {
+    z-index: 9999999 !important; 
+}
+
+/* 2. Arka plandaki yaramaz butonları AŞAĞI İNDİRELİM */
+/* Daha önce 10001 vermiştik, şimdi 500'e çekiyoruz. 
+   500 değeri hem tıklanabilir olmalarını sağlar hem de 
+   modalın (9999999) altında kalmalarını garantiler. */
+header, 
+.auth-buttons, 
+.user-profile, 
+.search-container, 
+.filter-container, 
+.filter-btn {
+    z-index: 500 !important; 
+    position: relative; /* Z-index'in çalışması için */
+}
+
+/* Mobilde Giriş/Kayıt butonlarının olduğu yerin arka planını temizle */
+/* Böylece yazılar birbirine girmez */
+@media screen and (max-width: 768px) {
+    .auth-buttons {
+        background: transparent !important; 
+        /* Eğer butonların arkasında siyahlık varsa kaldırır */
+    }
+}
+/* =========================================
+   ACİL BUTON TAMİRİ (MOBİL DOKUNMATİK SORUNU)
+   Bunu style.css'in en altına ekle
+   ========================================= */
+
+/* 1. Butonları EN EN ÜSTE taşı ve dokunmayı aç */
+.modal-actions-row, 
+.fav-btn-large, 
+.share-btn-large, 
+.action-btn-large,
+.close-image-btn {
+    pointer-events: auto !important; /* Dokunmayı zorla aç */
+    z-index: 10000005 !important; /* Modalın (9999999) bile üstüne çıkar */
+    position: relative !important;
+    touch-action: manipulation; /* Telefondaki "tıklama mı kaydırma mı" gecikmesini siler */
+    cursor: pointer !important;
+}
+
+/* 2. Telefondaki tıklama alanını biraz hissettir (Geri bildirim) */
+.fav-btn-large:active, 
+.share-btn-large:active {
+    transform: scale(0.9); /* Basınca küçülsün ki bastığımızı anlayalım */
+    background-color: #ffd700 !important; /* Basınca sarı olsun */
+    color: #000 !important;
+}
+
+/* 3. Butonların olduğu satırın arkası temiz olsun */
+.modal-actions-row {
+    background: transparent !important;
+}
+/* =========================================
+   BİLDİRİM VE ÇARPI BUTONU KURTARMA PAKETİ
+   Bunu style.css'in EN ALTINA yapıştır
+   ========================================= */
+
+/* 1. Bildirim Mesajını (Toast) GÖRÜNÜR YAP */
+.toast {
+    z-index: 2147483647 !important; /* Bilgisayar dünyasındaki en büyük sayı (Max Int) */
+    position: fixed !important;
+    bottom: 80px !important; /* Mobilde parmakların altına gelmesin, biraz yukarıda dursun */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    background: rgba(16, 185, 129, 0.95) !important; /* Daha canlı bir yeşil */
+    backdrop-filter: blur(5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+}
+
+/* 2. Çarpı (Kapat) Butonunu GERİ GETİR */
+.close-image-btn {
+    display: flex !important; /* Görünür yap */
+    align-items: center;
+    justify-content: center;
+    
+    /* Konumlandırma */
+    position: absolute !important;
+    top: 15px !important;
+    right: 15px !important;
+    
+    /* Katman Sırası: Modal'dan yüksek olmalı */
+    z-index: 20000000 !important; 
+    
+    /* Tasarım (Daha belirgin olsun) */
+    background-color: rgba(0, 0, 0, 0.6) !important; /* Yarı saydam siyah */
+    color: #ffffff !important;
+    width: 44px !important; /* Parmakla basmak için ideal genişlik */
+    height: 44px !important;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.2) !important;
+    font-size: 24px !important;
+    cursor: pointer;
+}
+
+/* Butona basınca tepki versin */
+.close-image-btn:active {
+    background-color: #ef4444 !important; /* Basınca kırmızı olsun */
+    transform: scale(0.9);
+}
+/* =========================================
+   SONSUZ SCROLL YÜKLENİYOR ANİMASYONU
+   ========================================= */
+.loading-spinner {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    display: none; /* Varsayılan olarak gizli */
+    grid-column: 1 / -1; /* Tüm genişliği kaplasın */
+}
+
+.spinner-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ffd700; /* Altın sarısı */
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+/* =========================================
+   GİZLİ PREMIUM METİN STİLİ
+   ========================================= */
+.premium-blur {
+    color: rgba(255, 255, 255, 0.5); /* Soluk renk */
+    filter: blur(4px); /* Bulanıklaştır */
+    user-select: none; /* Seçilemesin */
+    pointer-events: none;
+    margin-top: 5px;
+}
+
+.lock-message {
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 5px;
+}
