@@ -5,6 +5,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+// SCROLL KİLİDİ YÖNETİCİSİ
+function toggleBodyScroll(lock) {
+    if (lock) document.body.classList.add('no-scroll');
+    else document.body.classList.remove('no-scroll');
+}
+
 // Senin Proje Ayarların
 const firebaseConfig = {
   apiKey: "AIzaSyD1xhua_m0QjJY7jMQAzc2SJyKHr_N8MX4", // Burası senin gerçek key'in olmalı
@@ -126,21 +132,31 @@ function updateUI() {
 window.openLoginModal = () => { 
     if(loginModal) loginModal.classList.remove('hidden'); 
     if(registerModal) registerModal.classList.add('hidden'); 
+    toggleBodyScroll(true); // <--- KİLİTLE
 };
+
 window.openRegisterModal = () => { 
     if(registerModal) registerModal.classList.remove('hidden'); 
     if(loginModal) loginModal.classList.add('hidden'); 
+    toggleBodyScroll(true); // <--- KİLİTLE
 };
+
 window.closeAuthModals = () => { 
     if(loginModal) loginModal.classList.add('hidden');
     if(registerModal) registerModal.classList.add('hidden');
+    toggleBodyScroll(false); // <--- KİLİDİ AÇ
 };
+
 window.openProfileModal = () => { 
     if(profileModal) profileModal.classList.remove('hidden'); 
     renderAvatarGrid();
+    toggleBodyScroll(true); // <--- KİLİTLE
 };
-window.closeProfileModal = () => { if(profileModal) profileModal.classList.add('hidden'); };
 
+window.closeProfileModal = () => { 
+    if(profileModal) profileModal.classList.add('hidden'); 
+    toggleBodyScroll(false); // <--- KİLİDİ AÇ
+};
 /* =========================================
    5. İŞLEMLER (GİRİŞ, ÇIKIŞ, AVATAR)
    ========================================= */
@@ -210,9 +226,11 @@ window.handleCopy = async (text, isPremium) => {
         showToast(`-${PROMPT_COST} Kredi düştü. Kalan: ${newCredits}`);
     } 
     // 4. Durum: Yetersiz Kredi -> Reklam İzlet
+    // handleCopy fonksiyonunun içinde, en alttaki else (kredi yetersiz) bloğu:
     else {
         pendingPrompt = text; 
         if(adModal) adModal.classList.remove('hidden');
+        toggleBodyScroll(true); // <--- KİLİTLE (Reklam açılınca)
         startAdTimer();
     }
 };
@@ -271,6 +289,7 @@ if (claimBtn) {
         await updateDoc(userRef, { credits: newCredits });
         
         if(adModal) adModal.classList.add('hidden'); 
+        toggleBodyScroll(false);
         showToast(`Tebrikler! +${AD_REWARD} Kredi Kazandın 💎`);
         
         // Eğer kredi artık yetiyorsa kullanıcıya haber ver
@@ -287,6 +306,7 @@ if (closeAdBtn) {
     closeAdBtn.addEventListener('click', () => {
         clearInterval(countdownInterval);
         if(adModal) adModal.classList.add('hidden');
+        toggleBodyScroll(false);
         showToast("İşlem iptal edildi ❌");
     });
 }
@@ -437,7 +457,8 @@ window.openLightbox = (id) => {
     }
     
     imageModal.classList.remove('hidden');
-    
+    toggleBodyScroll(true);
+
     // "Buna Benzer Stiller" Bölümü (Alttaki Grid)
     const relatedGrid = document.getElementById('related-grid');
     if (relatedGrid) {
@@ -458,6 +479,7 @@ window.openLightbox = (id) => {
 window.closeLightbox = (e) => { 
     if (e.target.id === 'image-modal' || e.target.classList.contains('close-image-btn')) {
         imageModal.classList.add('hidden'); 
+        toggleBodyScroll(false);
     }
 };
 

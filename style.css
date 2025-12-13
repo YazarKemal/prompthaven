@@ -1242,3 +1242,11 @@ header {
         grid-template-columns: repeat(4, 1fr); /* 5 yerine 4'lü yap */
     }
 }
+/* =========================================
+   SCROLL KİLİDİ (MODAL AÇIKKEN KAYMAYI ÖNLER)
+   ========================================= */
+body.no-scroll {
+    overflow: hidden !important; /* Kaydırmayı kapat */
+    height: 100vh; /* Yüksekliği ekran kadar yap */
+    touch-action: none; /* Dokunmatik kaydırmayı engelle (Telefonda garanti çözüm) */
+}
