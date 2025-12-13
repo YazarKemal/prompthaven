@@ -1102,3 +1102,143 @@ header {
 }
 .similar-img { width: 90px; border-radius: 10px; cursor: pointer; }
 .similar-box { display: flex; gap: 10px; margin-top: 15px; overflow-x: auto; }
+
+/* =========================================
+   MOBİL VE TABLET UYUMLULUĞU (RESPONSIVE)
+   Bu kodları style.css'in en altına ekle!
+   ========================================= */
+
+@media screen and (max-width: 768px) {
+
+    /* 1. HEADER (ÜST KISIM) DÜZENİ */
+    header {
+        padding: 20px 15px; /* Boşlukları azalt */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    /* Giriş/Kayıt Butonlarını serbest bırak (Sağ üstten kurtar) */
+    .auth-buttons, .user-profile {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    /* Logoyu biraz küçült */
+    .logo {
+        width: 50px !important;
+        height: 50px !important;
+    }
+
+    header h1 {
+        font-size: 1.8rem; /* Başlığı küçült */
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+        white-space: normal; /* Telefondan taşarsa alt satıra geçsin */
+    }
+
+    /* 2. ARAMA VE FİLTRELER */
+    .search-container {
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    #search-input {
+        padding: 12px 20px 12px 45px; /* Daha kompakt input */
+        font-size: 0.95rem;
+    }
+
+    .search-icon {
+        left: 15px;
+        font-size: 1rem;
+    }
+
+    .filter-container {
+        gap: 8px; /* Buton aralarını sıkılaştır */
+        padding-bottom: 10px;
+        overflow-x: auto; /* Sığmazsa yana kaydırma özelliği */
+        justify-content: flex-start; /* Telefondan sola yasla */
+        flex-wrap: nowrap; /* Tek satırda kalsın, kaydırılsın */
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+
+    .filter-btn {
+        flex: 0 0 auto; /* Butonlar küçülmesin */
+        font-size: 0.85rem;
+        padding: 8px 16px;
+    }
+
+    /* 3. GALERİ (KARTLAR) */
+    .gallery-container {
+        /* Telefondan yan yana 1 tane büyük kart göster */
+        grid-template-columns: 1fr; 
+        gap: 25px;
+        padding: 0 10px;
+    }
+
+    .card {
+        height: 400px; /* Mobilde kart boyunu biraz kısalt */
+    }
+
+    /* Mobilde kartın üzerine gelme (Hover) sorunu için:
+       Metinler her zaman hafif görünür olsun ya da daha belirgin olsun */
+    .card-overlay {
+        background: linear-gradient(to top, #000 10%, rgba(0,0,0,0.6) 60%, transparent 100%);
+    }
+    
+    .prompt-text {
+        font-size: 0.9rem; /* Telefondan okunabilir boyut */
+        -webkit-line-clamp: 2; /* 2 satırda kes */
+    }
+
+    /* 4. LIGHTBOX (AÇILAN RESİM) */
+    .lightbox-content {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        border-radius: 0; /* Tam ekran hissi */
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modal-image-content {
+        max-height: 50vh; /* Resim ekranın yarısını kaplasın, butonlara yer kalsın */
+        margin-bottom: 15px;
+    }
+
+    .modal-actions-row {
+        gap: 10px;
+    }
+
+    .action-btn-large {
+        font-size: 0.9rem; /* Buton yazısını sığdır */
+    }
+
+    .close-image-btn {
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+        background: rgba(0,0,0,0.8);
+        color: white;
+    }
+
+    /* 5. MODALLAR (GİRİŞ/KAYIT) */
+    .modal-content, .auth-card {
+        width: 95%; /* Kenarlardan taşmasın */
+        padding: 25px;
+    }
+    
+    /* Avatar Seçim Izgarası Mobilde Taşmasın */
+    .avatar-grid {
+        grid-template-columns: repeat(4, 1fr); /* 5 yerine 4'lü yap */
+    }
+}
