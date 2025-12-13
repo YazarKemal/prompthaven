@@ -51,77 +51,48 @@ body {
 /* =========================================
    2. HEADER (NEBULA EFEKTLİ)
    ========================================= */
+/* =========================================
+   2. HEADER (TEMİZ & IŞIKSIZ)
+   ========================================= */
 header {
-    position: relative; /* İçindeki ışıklar buna göre hizalansın */
+    position: relative; /* Referans noktası */
     text-align: center;
-    padding: 80px 20px;
-    background: transparent; /* Arka planı şeffaf yap, body'deki grid görünsün */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 50px;
-    overflow: hidden; /* Işıklar dışarı taşmasın */
+    padding: 80px 20px 40px;
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 40px;
 }
 
-/* İçeriği öne getiren kutu */
-.header-content {
-    position: relative;
-    z-index: 10; /* Işıkların önünde dursun */
+/* Giriş/Kayıt Butonları (Sağ Üst Köşe) */
+.auth-buttons {
+    position: absolute; /* Havada asılı kalsın */
+    top: 30px;          /* Üstten 30px aşağıda */
+    right: 30px;        /* Sağdan 30px içeride */
+    display: flex;
+    gap: 15px;          /* Butonlar arası boşluk */
+    z-index: 200;       /* En önde olsun */
 }
 
-/* --- AMBIENT LIGHT (IŞIK BULUTLARI) --- */
-.hero-glow {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px); /* Çok bulanık olsun ki bulut gibi dursun */
-    opacity: 0.4; /* Çok parlak olmasın, göz yormasın */
-    z-index: 1; /* Yazının arkasında kalsın */
-    animation: floatGlow 10s infinite alternate ease-in-out;
-}
-
-/* 1. Işık Topu (Altın Sarısı - Sol Üst) */
-.glow-1 {
-    width: 300px;
-    height: 300px;
-    background: #ffd700;
-    top: -50px;
-    left: 10%;
-}
-
-/* 2. Işık Topu (Turuncu/Amber - Sağ Alt) */
-.glow-2 {
-    width: 400px;
-    height: 400px;
-    background: #ff5500;
-    bottom: -100px;
-    right: 10%;
-    animation-delay: 2s; /* Diğerinden farklı zamanda hareket etsin */
-}
-
-/* Işıkların Yüzme Animasyonu */
-@keyframes floatGlow {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(30px, 50px) scale(1.1); }
-}
-
-/* --- DİĞER HEADER STİLLERİ (AYNEN KALIYOR) --- */
-/* --- LOGO AYARI (DÜZELTİLMİŞ) --- */
-/* --- LOGO VE BAŞLIK HİZALAMA (DÜZELTİLDİ) --- */
+/* Logo Hizalama */
 .logo-container {
-    display: flex;           /* Yan yana diz */
-    justify-content: center; /* YATAYDA TAM ORTALA */
-    align-items: center;     /* Dikeyde ortala */
-    gap: 15px;               /* Logo ile yazı arasına 15px boşluk koy */
-    margin-bottom: 20px;
-    width: 100%;             /* Kapsayıcı tam genişlikte olsun ki ortalayabilsin */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    width: 100%;
 }
 
 .logo {
-    width: 60px;             /* İdeal logo boyutu */
-    height: 60px;            /* Kare olsun */
-    object-fit: contain;     /* Resmi bozmadan sığdır */
-    border-radius: 12px;     /* Köşeleri yuvarlat */
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); /* Altın parıltı */
+    width: 60px !important; /* Boyutu zorla */
+    height: 60px !important;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
     display: block;
 }
+
+/* --- IŞIK EFEKTLERİ (hero-glow) SİLİNDİ --- */
 /* ... logo, h1 stilleri aynen kalsın ... */
 
 /* --- DAKTİLO YAZI EFEKTİ --- */
@@ -151,8 +122,10 @@ header {
    ========================================= */
 .search-container {
     position: relative;
+    pointer-events: auto;
     max-width: 600px;
     margin: 40px auto 30px;
+    z-index: 50;
 }
 
 #search-input {
@@ -186,9 +159,12 @@ header {
 
 .filter-container {
     display: flex;
+    pointer-events: auto;
     justify-content: center;
     gap: 12px;
     flex-wrap: wrap;
+    z-index: 50;
+    position: relative;
 }
 
 .filter-btn {
@@ -576,3 +552,553 @@ header h1 {
     border-color: #3b82f6;
     transform: translateY(-2px);
 }
+/* =========================================
+   YENİ AUTH SİSTEMİ TASARIMI
+   ========================================= */
+
+/* Header Düzeni Güncellemesi */
+header {
+    position: relative;
+    /* Butonları sağa yaslamak için */
+}
+
+.auth-buttons {
+   position: relative;
+   pointer-events: auto;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 50; /* Her şeyin üstünde */
+}
+
+.user-profile {
+   position: absolute;
+    top: 30px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 200;
+    cursor: pointer;
+}
+
+/* Butonlar */
+.login-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    font-family: 'Inter', sans-serif;
+}
+.login-btn:hover { border-color: white; }
+
+.register-btn {
+    background: #ffd700;
+    border: 1px solid #ffd700;
+    color: #000;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s;
+    font-family: 'Inter', sans-serif;
+}
+.register-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); }
+
+/* Giriş Yapmış Kullanıcı Görünümü */
+.credit-display-small {
+    background: rgba(0,0,0,0.5);
+    padding: 5px 12px;
+    border-radius: 20px;
+    color: #ffd700;
+    font-weight: bold;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.2);
+}
+
+.logout-btn {
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* AUTH MODALLARI (Pencereler) */
+.auth-card {
+    background: #111827;
+    padding: 40px;
+    border-radius: 24px;
+    text-align: center;
+    max-width: 350px;
+    width: 90%;
+    border: 1px solid #374151;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+    position: relative;
+    animation: zoomIn 0.3s ease;
+}
+
+.auth-card h2 { color: white; margin-bottom: 5px; }
+.auth-card p { color: #9ca3af; margin-bottom: 25px; font-size: 0.9rem; }
+
+.close-auth {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #6b7280;
+    font-size: 28px;
+    cursor: pointer;
+}
+.close-auth:hover { color: white; }
+
+.auth-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 10px;
+    color: white;
+    outline: none;
+    box-sizing: border-box; /* Taşmayı önler */
+}
+.auth-input:focus { border-color: #ffd700; }
+
+.action-btn {
+    width: 100%;
+    padding: 12px;
+    background: #ffd700;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 1rem;
+}
+.action-btn:hover { background: #e6c200; }
+
+.google-btn {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s;
+}
+.google-btn:hover { transform: translateY(-2px); }
+
+.divider {
+    position: relative;
+    margin: 20px 0;
+    border-top: 1px solid #374151;
+}
+.divider span {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #111827;
+    padding: 0 10px;
+    color: #6b7280;
+    font-size: 0.8rem;
+}
+
+.switch-auth { margin-top: 20px; font-size: 0.9rem; }
+.switch-auth a { color: #ffd700; text-decoration: none; font-weight: bold; }
+
+/* Mobilde butonlar üst üste binmesin */
+@media (max-width: 600px) {
+    .auth-buttons, .user-profile {
+        position: relative; /* Telefondaysa akışta kalsın */
+        justify-content: center;
+        top: 0; right: 0;
+        margin-bottom: 20px;
+    }
+    header { padding-top: 20px; }
+}
+/* =========================================
+   PROFİL AYARLARI TASARIMI
+   ========================================= */
+
+/* Profil Kartı (Biraz daha geniş) */
+.profile-card {
+    max-width: 400px;
+}
+
+.current-profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.big-avatar {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.user-email-display {
+    color: #ffd700;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 5px 15px;
+    border-radius: 15px;
+}
+
+/* Avatar Seçim Izgarası */
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 tane yan yana */
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.avatar-option {
+    font-size: 1.8rem;
+    background: #1f2937;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-option:hover {
+    background: #374151;
+    transform: scale(1.1);
+}
+
+/* Seçili Avatar Stili */
+.avatar-option.selected {
+    border-color: #ffd700;
+    background: rgba(255, 215, 0, 0.1);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.logout-btn-text {
+    background: transparent;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+.logout-btn-text:hover {
+    background: #ef4444;
+    color: white;
+}
+/* --- KESİN HİZALAMA DÜZELTMESİ --- */
+
+/* 1. Header'ın kendisi referans noktası olsun */
+header {
+    position: relative !important;
+}
+
+/* 2. Giriş/Kayıt Butonlarını ZORLA Sağ Üste Al */
+.auth-buttons {
+    position: absolute !important;
+    top: 25px !important;
+    right: 25px !important;
+    left: auto !important; /* Sol tarafla bağını kopar */
+    display: flex !important;
+    gap: 15px !important;
+    z-index: 9999 !important; /* Her şeyin üstünde olsun */
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 3. Profil İkonunu da ZORLA Sağ Üste Al */
+.user-profile {
+    position: absolute !important;
+    top: 25px !important;
+    right: 25px !important;
+    left: auto !important;
+    z-index: 9999 !important;
+    margin: 0 !important;
+}
+
+/* 4. Logoyu Ortada Tut */
+.logo-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 0 auto 20px auto !important;
+}
+/* =========================================
+   GİZLEME SORUNU ÇÖZÜMÜ (EN ALTA EKLE)
+   ========================================= */
+
+/* Eğer elementte 'hidden' sınıfı varsa, her şeyi yok say ve GİZLE */
+.auth-buttons.hidden, 
+.user-profile.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+/* Yetersiz Kredi Durumunda Çıkan Buton */
+.ad-unlock-btn {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important; /* Mor renk */
+    color: white !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+    animation: pulseBtn 2s infinite;
+}
+
+@keyframes pulseBtn {
+    0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(139, 92, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+}
+/* =========================================
+   LIGHTBOX & INTERNAL LOOP TASARIMI
+   ========================================= */
+
+/* Lightbox İçeriği (Kaydırma özelliği kazandırdık) */
+.lightbox-content {
+    max-width: 900px;
+    width: 95%;
+    max-height: 95vh;
+    overflow-y: auto; /* Dikey kaydırma */
+    background: #111827;
+    border-radius: 20px;
+    padding: 20px;
+    position: relative;
+    border: 1px solid #374151;
+    box-shadow: 0 0 50px rgba(0,0,0,0.9);
+}
+
+/* Scrollbar Gizleme (Estetik için) */
+.lightbox-content::-webkit-scrollbar { width: 8px; }
+.lightbox-content::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+
+/* Ana Resim Ayarı */
+.modal-image-content {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    background: #000;
+}
+
+/* Benzer Stiller Başlığı */
+.related-title {
+    color: #ffd700;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    border-left: 4px solid #ffd700;
+    padding-left: 10px;
+}
+
+/* Benzer Stiller Izgarası */
+.related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+/* Küçük Öneri Kartları */
+.related-card {
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+    border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    aspect-ratio: 1 / 1; /* Tam kare olsun */
+}
+
+.related-card:hover {
+    transform: scale(1.05);
+    border-color: #ffd700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+.related-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.related-badge {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 0.7rem;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+/* =========================================
+   SÜPER LIGHTBOX TASARIMI
+   ========================================= */
+
+/* Kontrol Paneli */
+.modal-controls {
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 20px;
+}
+
+/* Buton Sırası */
+.modal-actions-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+/* Büyük Favori ve Paylaş Butonları */
+.fav-btn-large, .share-btn-large {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: #1f2937;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; justify-content: center; align-items: center;
+}
+.fav-btn-large:hover, .share-btn-large:hover {
+    background: white;
+    color: black;
+}
+.fav-btn-large.active {
+    background: #ff4757;
+    color: white;
+    border-color: #ff4757;
+}
+
+/* Büyük Ana Buton (Kopyala/Reklam) */
+.action-btn-large {
+    flex-grow: 1; /* Ortada geniş yer kaplasın */
+    height: 50px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex; justify-content: center; align-items: center; gap: 10px;
+    background: white;
+    color: black;
+    transition: transform 0.2s;
+}
+.action-btn-large:hover { transform: scale(1.02); }
+
+/* Mor Reklam Butonu (Lightbox için) */
+.ad-unlock-btn-large {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+    animation: pulseBtn 2s infinite;
+}
+
+/* Prompt Metin Kutusu */
+.modal-prompt-box {
+    background: #000;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #374151;
+    max-height: 100px;
+    overflow-y: auto;
+}
+#modal-prompt-text {
+    margin: 0;
+    color: #cbd5e1;
+    font-family: monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+/* =========================================
+   GÖRÜNMEZ DUVAR KIRICI (KESİN ÇÖZÜM) 🔨
+   ========================================= */
+
+/* 1. Header'ın kendisi tıklamaları ASLA yakalamasın (Hayalet olsun) */
+header {
+    pointer-events: none !important;
+}
+
+/* 2. Ama Header'ın içindeki şu elemanlar TIKLANABİLSİN */
+.auth-buttons, 
+.user-profile,
+.search-container,
+.logo-container {
+    pointer-events: auto !important; 
+}
+
+/* 3. Filtre Konteyneri ve Butonları EN ÖNE AL */
+.filter-container {
+    position: relative !important;
+    z-index: 900 !important; /* Arşa çıkarıyoruz */
+    pointer-events: auto !important; /* Tıklanabilir olsun */
+    display: flex !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+}
+
+.filter-btn {
+    position: relative !important;
+    z-index: 10001 !important; /* Konteynerdan bile yukarıda */
+    cursor: pointer !important;
+    pointer-events: auto !important; /* Garanti olsun */
+}
+
+/* 4. Eğer bir 'overlay' varsa onu arkaya it */
+.hero-glow, .overlay, .background-effect {
+    z-index: -1 !important;
+    pointer-events: none !important;
+}
+#image-modal, .lightbox-overlay {
+    z-index: 999999 !important;
+}
+.filter-container {
+    z-index: 100 !important;
+}
+.similar-img { width: 90px; border-radius: 10px; cursor: pointer; }
+.similar-box { display: flex; gap: 10px; margin-top: 15px; overflow-x: auto; }

@@ -25,8 +25,16 @@
 <body>
 
     <header>
-        <div class="hero-glow glow-1"></div>
-        <div class="hero-glow glow-2"></div>
+        <div class="auth-buttons" id="auth-actions">
+            <button class="login-btn" onclick="openLoginModal()">Giriş Yap</button>
+            <button class="register-btn" onclick="openRegisterModal()">Kayıt Ol</button>
+        </div>
+
+        <div class="user-profile hidden" id="user-profile" onclick="openProfileModal()" style="cursor: pointer;">
+            <span class="credit-display-small"><i class="fa-regular fa-gem"></i> <span id="header-credit">1000</span></span>
+            <div class="avatar-circle" id="header-avatar">😎</div>
+            <button class="logout-btn" onclick="logoutUser()"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
 
         <div class="header-content">
             <div class="logo-container">
@@ -41,7 +49,6 @@
                 <input type="text" id="search-input" placeholder="Ne arıyorsun? (örn: iş adamı, kış modası, sinematik...)">
             </div>
 
-            <div class="filter-container">
                 <button class="filter-btn active" data-filter="all">Tümü</button>
                 <button class="filter-btn" data-filter="portre">Portre</button>
                 <button class="filter-btn" data-filter="boydan">Moda & Boydan</button>
@@ -56,22 +63,135 @@
         </div>
 
     <div id="ad-modal" class="modal hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title"><i class="fa-solid fa-crown" style="color: #ffd700;"></i> Premium İçerik</h3>
-                <span class="close-image-btn" id="close-modal" style="position: static; font-size: 24px; color:#fff;">&times;</span>
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+        
+        <div class="modal-header" style="justify-content: center; flex-direction: column; margin-bottom: 20px;">
+            <h3 class="modal-title" style="margin: 0; color: #fff;"><i class="fa-solid fa-gem" style="color: #ffd700;"></i> Kredi Kazan</h3>
+            <p style="color:#9ca3af; font-size: 0.9rem; margin-top:5px;">Süre bitene kadar lütfen bekle.</p>
+        </div>
+
+        <div id="ad-placeholder" style="background: #1f2937; width: 100%; height: 250px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; border: 2px dashed #374151; color: #6b7280; border-radius: 10px;">
+            <div>
+                <i class="fa-solid fa-rectangle-ad" style="font-size: 3rem; margin-bottom: 10px; opacity: 0.5;"></i><br>
+                <span>Reklam Yükleniyor...</span>
             </div>
-            <p style="color:#ccc; font-size: 0.95rem; margin-top:10px;">Bu yüksek kaliteli promptu kopyalamak için 3 saniyelik bir bekleme süresi gereklidir.</p>
-            <button id="watch-ad-btn" class="watch-btn"><i class="fa-solid fa-play"></i> Kilidi Aç (Demo)</button>
+        </div>
+
+        <div id="timer-display" style="font-size: 2.5rem; font-weight: 800; color: #ffd700; margin-bottom: 20px; font-family: monospace;">
+            10
+        </div>
+
+        <button id="claim-reward-btn" class="action-btn" style="opacity: 0.5; pointer-events: none; background: #374151; color: #9ca3af;">
+            <i class="fa-solid fa-lock"></i> Bekleyiniz...
+        </button>
+        
+        <button id="close-ad-modal" style="background: transparent; border: none; color: #6b7280; margin-top: 15px; cursor: pointer; text-decoration: underline; font-size: 0.9rem;">
+            İptal Et ve Kapat
+        </button>
+    </div>
+</div>
+
+    <div id="image-modal" class="modal hidden">
+    <div class="lightbox-content">
+        <span class="close-image-btn" onclick="closeLightbox(event)">&times;</span>
+        
+        <div style="position: relative;">
+            <img id="lightbox-img" src="" alt="AI Art" class="modal-image-content">
+            <div id="modal-premium-badge" class="premium-badge hidden" style="top: 10px; right: 10px;">
+                <i class="fa-solid fa-crown"></i> PREMIUM
+            </div>
+        </div>
+
+        <div class="modal-controls">
+            <div class="modal-actions-row">
+                <button id="modal-fav-btn" class="fav-btn-large" title="Favorilere Ekle">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+                
+                <button id="modal-action-btn" class="action-btn-large">
+                    <i class="fa-regular fa-copy"></i> Kopyala
+                </button>
+
+                <button id="modal-share-btn" class="share-btn-large" title="Paylaş">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </button>
+            </div>
+
+            <div class="modal-prompt-box">
+                <p id="modal-prompt-text">Prompt yükleniyor...</p>
+            </div>
+        </div>
+        
+        <div class="related-section">
+            <h3 class="related-title">✨ Buna Benzer Stiller</h3>
+            <div class="related-grid" id="related-grid">
+                </div>
+        </div>
+
+    </div>
+</div>
+    <footer>
+        <div id="login-modal" class="modal hidden">
+        <div class="auth-card">
+            <span class="close-auth" onclick="closeAuthModals()">&times;</span>
+            <h2>Tekrar Hoşgeldin! 👋</h2>
+            <p>PromptHaven dünyasına giriş yap.</p>
+            
+           <button class="google-btn" onclick="loginWithGoogle()"> <i class="fa-brands fa-google"></i> Google ile Giriş Yap
+</button>
+            
+            <div class="divider"><span>veya e-posta ile</span></div>
+            
+            <input type="email" placeholder="E-Posta Adresi" class="auth-input">
+            <input type="password" placeholder="Şifre" class="auth-input">
+            
+            <button class="action-btn" onclick="simulateLogin()">Giriş Yap</button>
+            
+            <p class="switch-auth">Hesabın yok mu? <a href="#" onclick="switchModal('register')">Kayıt Ol</a></p>
         </div>
     </div>
+        <div id="profile-modal" class="modal hidden">
+    <div class="auth-card profile-card">
+        <span class="close-auth" onclick="closeProfileModal()">&times;</span>
+        <h2>Profil Ayarları ⚙️</h2>
+        <p>Karakterini seç ve tarzını yansıt.</p>
 
-    <div id="image-modal" class="modal hidden" onclick="closeLightbox(event)">
-        <span class="close-image-btn" onclick="closeLightbox(event)">&times;</span>
-        <img class="modal-image-content" id="lightbox-img">
+        <div class="current-profile-info">
+            <div class="big-avatar" id="preview-avatar">😎</div>
+            <div class="user-email-display">misafir@prompthaven.com</div>
+        </div>
+
+        <div class="divider"><span>Avatar Seç</span></div>
+
+        <div class="avatar-grid" id="avatar-grid">
+            </div>
+
+        <button class="action-btn" onclick="saveProfileChanges()">Kaydet ve Kapat</button>
+        <button class="logout-btn-text" onclick="logoutUser()">Çıkış Yap <i class="fa-solid fa-right-from-bracket"></i></button>
     </div>
+</div>
 
-    <footer>
+    <div id="register-modal" class="modal hidden">
+        <div class="auth-card">
+            <span class="close-auth" onclick="closeAuthModals()">&times;</span>
+            <h2>Hesap Oluştur 🚀</h2>
+            <p>Sınırsız yaratıcılık için aramıza katıl.</p>
+            
+           <button class="google-btn" onclick="loginWithGoogle()">
+    <i class="fa-brands fa-google"></i> Google ile Kayıt Ol
+</button>
+            
+            <div class="divider"><span>veya e-posta ile</span></div>
+            
+            <input type="text" placeholder="Ad Soyad" class="auth-input">
+            <input type="email" placeholder="E-Posta Adresi" class="auth-input">
+            <input type="password" placeholder="Şifre" class="auth-input">
+            
+            <button class="action-btn" onclick="simulateLogin()">Kayıt Ol</button>
+            
+            <p class="switch-auth">Zaten üye misin? <a href="#" onclick="switchModal('login')">Giriş Yap</a></p>
+        </div>
+    </div>
         <div class="footer-content">
             <p>&copy; 2025 PromptHaven. Tüm hakları saklıdır.</p>
             <div class="footer-links">
@@ -87,6 +207,6 @@
     </footer>
 
     <div id="toast" class="toast">Kopyalandı! ✅</div>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
